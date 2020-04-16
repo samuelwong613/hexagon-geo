@@ -1,0 +1,11 @@
+{
+  "name": "hexagon-geo",
+  "version": "1.0.0",
+  "description": "A 3D hexagon vertices generator with segment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Wong",
+  "license": "MIT"
+}
