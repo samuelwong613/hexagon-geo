@@ -110,7 +110,7 @@ indices      | number[]  | The indexing of vertices for faces
 ### Texture with rotation
 You may rotate the hexagon to achieve other texture pattern.
 ```javascript
-import  hexagonGeoGenerator, {rotateAll} from  './node_modules/hexagon-geo/index.js';
+import  hexagonGeoGenerator, {rotateAll} from  'hexagon-geo';
 ...
 
 let {vertices, indices, uvs, normals} = hexagonGeoGenerator(HEX_SIZE, HEX_SEGMENT, -Math.PI/7);
