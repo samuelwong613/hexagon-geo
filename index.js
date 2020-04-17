@@ -34,30 +34,26 @@
  */
   
 
-
-/**
- * Constance of param - textureFit
- */
+/** Constance of param - textureFit */
 export const COVER = 'COVER';
+/** Constance of param - textureFit */
 export const CONTAIN = 'CONTAIN';
+/** Constance of param - textureFit */
 export const FILL = 'FILL';
 
 
 
 /**
- * Main generator
+ * @param {number}    [size=10]               the length of hexagon edge
+ * @param {number}    [segment=1]             the segment level
+ * @param {number}    [rotateAngle=0]         rotation of hexagon
+ * @param {string}    [textureFit='COVER']    how to fit the texture
  * 
- * @param {number}    size            - the length of hexagon edge
- * @param {integer}   segment         - the segment level
- * @param {number}    rotateAngle     - rotation of hexagon
- * @param {string}    textureFit      - how to fit the texture
- * 
- * @returns {object}
- * @returns {object.vertices}         - 3D vertices, start with center(0,0) and end with the outermost  
- * @returns {object.indices}          - indices of the front face
- * @returns {object.invertIndices}    - indices of the back face
- * @returns {object.normals}          - normals
- * @returns {object.uvs}              - UVs for texture
+ * @returns vertices         - 3D vertices, start with center(0,0) and end with the outermost  
+ * @returns indices          - indices of the front face
+ * @returns invertIndices    - indices of the back face
+ * @returns normals
+ * @returns uvs              - UVs for texture
  */
 export default function(size, segment, rotateAngle, textureFit){
   var param = check(size, segment, rotateAngle, textureFit);
@@ -71,8 +67,8 @@ export default function(size, segment, rotateAngle, textureFit){
   for (var lv = 1; lv <= segment; lv++)
     generateGeoLv(vertices, indices, size, lv, segment);
 
-  if (rotateAngle !== 0)
-    rotateAll(vertices, rotateAngle);
+  if (rotateAngle !== 0 && !rotateAll(vertices, rotateAngle))
+    return;
 
   var uvs = computeUV(vertices, textureFit);
   var invertedIndices = computeInvertedIndices(indices);
@@ -92,17 +88,17 @@ export default function(size, segment, rotateAngle, textureFit){
 /**
  * Rotate the vertices by angle, used for vertical hexagon
  * 
- * @param {array}     vertices        - vertices, which will be manipulated
- * @param {number}    angle           - rotation angle in radian
+ * @param {number[]}  vertices        vertices, which will be manipulated
+ * @param {number}    angle           rotation angle in radian
  */
 export function rotateAll(vertices, angle){
   if (!(vertices instanceof Array) || (vertices.length % 3 !== 0)){
     console.error(`hexagon-geo: rotateAll: vertices is invalid, ${vertices}`);
-    return null;
+    return;
   }
   if (typeof angle !== 'number'){
     console.error(`hexagon-geo: rotateAll: angle must be a number, instead of ${typeof angle} with value ${angle}`);
-    return false;
+    return;
   }
 
   for (var i=0; i<vertices.length; i+=3){
@@ -111,6 +107,7 @@ export function rotateAll(vertices, angle){
     vertices[i] = vertix[0];
     vertices[i+1] = vertix[1];
   }
+  return true;
 }
 
 
@@ -118,10 +115,10 @@ export function rotateAll(vertices, angle){
 /**
  * Compute the UV mapping by vertices position
  * 
- * @param {array}     vertices        - vertices used for compute UV
- * @param {string}    textureFit      - strategy of texture fitting, either COVER, CONTAIN or FILL
+ * @param {number[]}  vertices        vertices used for compute UV
+ * @param {string}    textureFit      strategy of texture fitting, either COVER, CONTAIN or FILL
  * 
- * @returns {array}                   - UVs for texture
+ * @returns {number[]}                UVs for texture
  */
 export function computeUV(vertices, textureFit){
   if (!(vertices instanceof Array) || (vertices.length % 3 !== 0)){
@@ -160,9 +157,9 @@ export function computeUV(vertices, textureFit){
 /**
  * Invert indices for back face 
  * 
- * @param {array}     indices         - used for compute the inverted indices
+ * @param {number[]}  indices         used for compute the inverted indices
  * 
- * @returns {array}                   - a new array contain the inverted indices
+ * @returns {number[]}                a new array contain the inverted indices
  */
 export function computeInvertedIndices(indices){
   if (!(indices instanceof Array) || (indices.length % 3 !== 0)){

@@ -6,6 +6,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Samuel Wong",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samuelwong613/hexagon-geo"
+  },
+  "keywords": [
+    "hexagon-geo",
+    "hexagon",
+    "geometry",
+    "generator",
+    "javascript",
+    "js"
+  ],
+  "author": "samuelwong <samuelwong613@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/samuelwong613/hexagon-geo"
 }
