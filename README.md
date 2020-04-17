@@ -12,7 +12,7 @@ npm install hexagon-geo --save
 ## Usage
 
 ### Basic
-We use [three.js](https://threejs.org/](https://threejs.org/)) as the 3D rendering library for this example.
+We use [three.js](https://threejs.org/) as the 3D rendering library for this example.
 ```javascript
 import hexagonGeoGenerator from 'hexagon-geo';
 
